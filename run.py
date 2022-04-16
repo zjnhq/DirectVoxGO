@@ -12,7 +12,7 @@ import torch.nn.functional as F
 
 from lib import utils, dvgo, dmpigo
 from lib.load_data import load_data
-
+from pdb import *
 
 def config_parser():
     '''Define command line arguments
@@ -282,6 +282,8 @@ def scene_rep_reconstruction(args, cfg, cfg_model, cfg_train, xyz_min, xyz_max, 
         'flip_x': cfg.data.flip_x,
         'flip_y': cfg.data.flip_y,
     }
+
+    # set_trace()
 
     # init batch rays sampler
     def gather_training_rays():

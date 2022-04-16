@@ -363,7 +363,7 @@ __global__ void raw2alpha_cuda_kernel(
 
   const int i_pt = blockIdx.x * blockDim.x + threadIdx.x;
   if(i_pt<n_pts) {
-    const scalar_t e = exp(density[i_pt] + shift); // can be inf
+    const float e = exp(density[i_pt] + shift); // can be inf
     exp_d[i_pt] = e;
     alpha[i_pt] = 1 - pow(1 + e, -interval);
   }
@@ -401,7 +401,8 @@ __global__ void raw2alpha_backward_cuda_kernel(
 
   const int i_pt = blockIdx.x * blockDim.x + threadIdx.x;
   if(i_pt<n_pts) {
-    grad[i_pt] = min(exp_d[i_pt], 1e10) * pow(1+exp_d[i_pt], -interval-1) * interval * grad_back[i_pt];
+    const float tmp= 1+exp_d[i_pt];
+    grad[i_pt] = min(exp_d[i_pt], 1e10) * pow(tmp, -interval-1) * interval * grad_back[i_pt];
   }
 }
 
